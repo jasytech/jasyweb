@@ -52,7 +52,7 @@ function App() {
         title="Ideas que encuentran"
         titleAccent="su mejor forma."
         description="Creamos software que conecta personas, simplifica lo complejo y abre nuevas posibilidades para tu negocio."
-        ctaLabel="Contanos tu idea"
+        ctaLabel="Contanos tu idea para conocerte mejor"
         ctaHref="#contacto"
         footerLabel="Software para un mundo mejor"
         footerPage="01 / 04"
