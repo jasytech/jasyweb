@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { ArrowUpRight, Check, MoveRight } from 'lucide-react'
 import { company, contactEndpoint } from '../config'
+import { createContactSubject } from '../contact'
 
 export default function Contact() {
   const [status, setStatus] = useState('idle')
@@ -34,7 +35,7 @@ export default function Contact() {
           name: fields.name.trim(),
           email: fields.email.trim(),
           message: fields.message.trim(),
-          _subject: 'Nueva consulta desde JasyTECH',
+          _subject: createContactSubject(fields.name),
           _template: 'table',
           _url: 'https://jasytech.github.io/jasyweb/',
           _honey: '',

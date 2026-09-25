@@ -59,6 +59,12 @@ La activación y la recepción real requieren acceso a esa casilla. Un build exi
 
 La interfaz bloquea envíos duplicados, valida campos, limita la espera a 20 segundos y conserva los datos ante errores o activación pendiente detectada. Solo muestra éxito cuando el servicio responde que aceptó el mensaje. Eso no prueba que Gmail lo haya entregado a la bandeja de entrada. No reintenta automáticamente para evitar mensajes duplicados si el servidor recibió una solicitud pero la respuesta se perdió.
 
+Cada consulta nueva usa un asunto con el nombre, fecha y hora de Argentina y un identificador único, para que Gmail no agrupe distintos envíos bajo el mismo asunto. Esto aplica a los mensajes futuros; no cambia los correos ya recibidos.
+
+## Fondo y desplazamiento
+
+La imagen de marca está en una única capa fija detrás de toda la página. El contenido se desplaza por encima, con fondos translúcidos para conservar la legibilidad. El hero tiene altura según su contenido, sin los mínimos anteriores de 690/650 píxeles. La capa decorativa no captura clics ni aparece en lectores de pantalla.
+
 Documentación: [AJAX](https://formsubmit.co/ajax-documentation), [activación y problemas frecuentes](https://formsubmit.co/help).
 
 ## Despliegue

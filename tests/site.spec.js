@@ -33,7 +33,7 @@ test('carga sin errores y todos los recursos usan la ruta de GitHub Pages', asyn
       .toBe(true)
   }
   const background = await page
-    .locator('.hero-art')
+    .locator('.page-background')
     .evaluate((element) => getComputedStyle(element).backgroundImage)
   expect(background).toContain('/jasyweb/assets/hero.webp')
   await expect(
@@ -80,7 +80,7 @@ test('envía los campos al servicio, bloquea duplicados y confirma solo después
     name: 'María & Juan',
     email: 'maria+web@example.com',
     message: 'Hola, ¿podemos hablar?\nPresupuesto: $100 & más.',
-    _subject: 'Nueva consulta desde JasyTECH',
+    _subject: expect.stringContaining('Consulta JasyTECH — María & Juan — '),
   })
   release()
   await expect(page.getByRole('status')).toContainText('Mensaje enviado')
@@ -90,6 +90,78 @@ test('envía los campos al servicio, bloquea duplicados y confirma solo después
   ).toBeEnabled()
   expect(requests).toBe(1)
 })
+
+test('dos consultas idénticas en el mismo instante tienen asuntos distintos', async ({
+  page,
+}) => {
+  const subjects = []
+  await page.clock.setFixedTime(new Date('2026-09-25T03:38:15Z'))
+  await page.route(endpoint, async (route) => {
+    subjects.push(route.request().postDataJSON()._subject)
+    await route.fulfill({ json: { success: true } })
+  })
+  for (let index = 0; index < 2; index++) {
+    await fillContact(page)
+    await page.getByRole('button', { name: 'Enviar mensaje' }).click()
+    await expect(page.getByRole('status')).toContainText('Mensaje enviado')
+  }
+  expect(subjects).toHaveLength(2)
+  for (const subject of subjects) {
+    expect(subject).toContain('Consulta JasyTECH — María & Juan — 25/09/2026')
+    expect(subject).toContain('00:38:15 (AR)')
+    expect(subject).toMatch(
+      /\[[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\]$/,
+    )
+  }
+  expect(subjects[0]).not.toBe(subjects[1])
+})
+
+for (const width of [390, 1440]) {
+  test(`el fondo queda fijo y el hero es compacto a ${width}px`, async ({
+    page,
+  }, testInfo) => {
+    await page.setViewportSize({ width, height: 900 })
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.goto('./')
+    await page.evaluate(() => document.fonts.ready)
+    const background = page.locator('.page-background')
+    const initial = await background.boundingBox()
+    expect(initial).toEqual({ x: 0, y: 0, width, height: 900 })
+    const hero = await page.locator('.hero').boundingBox()
+    expect(hero.height).toBeLessThan(width === 390 ? 500 : 600)
+    await expect(background).toHaveAttribute('aria-hidden', 'true')
+    await page.screenshot({ path: testInfo.outputPath('inicio.png') })
+    for (const section of [
+      '.intro',
+      '#servicios',
+      '#metodo',
+      '#soluciones',
+      '#contacto',
+    ]) {
+      await page
+        .locator(section)
+        .evaluate((element) => element.scrollIntoView())
+      expect(await background.boundingBox()).toEqual(initial)
+      const color = await page
+        .locator(section)
+        .evaluate((element) => getComputedStyle(element).backgroundColor)
+      expect(color).toMatch(/^rgba\(/)
+    }
+    expect(
+      await page
+        .locator('.hero')
+        .evaluate((element) => element.getBoundingClientRect().top),
+    ).toBeLessThan(0)
+    await expect(
+      page.getByRole('button', { name: 'Enviar mensaje' }),
+    ).toBeVisible()
+    await page.screenshot({ path: testInfo.outputPath('contacto.png') })
+    await page
+      .locator('#servicios')
+      .evaluate((element) => element.scrollIntoView())
+    await page.screenshot({ path: testInfo.outputPath('servicios.png') })
+  })
+}
 
 for (const failure of [
   'network',

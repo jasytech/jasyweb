@@ -31,7 +31,22 @@ textarea {
   font: inherit;
 }
 .site-shell {
-  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+.page-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(235, 245, 245, 0.84),
+      rgba(235, 245, 245, 0.42)
+    ),
+    url('/assets/hero.webp') center / cover no-repeat;
 }
 .navbar {
   align-items: center;
@@ -41,7 +56,7 @@ textarea {
   justify-content: space-between;
   left: 0;
   padding: 0 clamp(22px, 6vw, 96px);
-  position: absolute;
+  position: relative;
   right: 0;
   top: 0;
   z-index: 5;
@@ -89,26 +104,12 @@ textarea {
   display: none;
 }
 .hero {
-  background: #dcecf0;
-  min-height: 690px;
-  overflow: hidden;
+  background: transparent;
   position: relative;
 }
-.hero-art {
-  background:
-    linear-gradient(
-      90deg,
-      rgba(235, 245, 245, 0.95),
-      rgba(235, 245, 245, 0.55)
-    ),
-    url('/assets/hero.webp') center/cover no-repeat;
-  inset: 0;
-  opacity: 0.95;
-  position: absolute;
-}
 .hero-content {
-  max-width: 1040px;
-  padding: 185px 8vw 120px;
+  max-width: 1160px;
+  padding: clamp(36px, 4vw, 58px) 8vw 28px;
   position: relative;
   z-index: 1;
 }
@@ -124,7 +125,7 @@ textarea {
   align-items: center;
   display: flex;
   gap: 9px;
-  margin: 0 0 30px;
+  margin: 0 0 24px;
 }
 h1,
 h2,
@@ -140,8 +141,8 @@ h2 {
 }
 h1 {
   color: var(--ink);
-  font-size: clamp(48px, 7vw, 92px);
-  margin-bottom: 30px;
+  font-size: clamp(42px, 5.4vw, 76px);
+  margin-bottom: 24px;
 }
 h1 em,
 h2 em {
@@ -182,20 +183,18 @@ h2 em {
   margin-top: 18px;
 }
 .hero-footer {
-  bottom: 22px;
   color: #527172;
   display: flex;
   font-family: 'DM Mono', monospace;
   font-size: 10px;
   justify-content: space-between;
-  left: 8vw;
   letter-spacing: 0.08em;
-  position: absolute;
-  right: 8vw;
+  padding: 0 8vw 32px;
   text-transform: uppercase;
   z-index: 1;
 }
 .band {
+  background: rgba(248, 250, 247, 0.72);
   padding: clamp(76px, 10vw, 145px) clamp(22px, 9vw, 145px);
 }
 .section-label {
@@ -247,7 +246,7 @@ h2 em {
   margin-top: 20px;
 }
 .light-band {
-  background: var(--mist);
+  background: rgba(233, 241, 237, 0.76);
 }
 .section-heading {
   display: grid;
@@ -308,7 +307,7 @@ h2 em {
   right: 22px;
 }
 .method {
-  background: #f8faf7;
+  background: rgba(248, 250, 247, 0.72);
 }
 .method-layout {
   display: grid;
@@ -389,7 +388,7 @@ h2 em {
   max-width: 220px;
 }
 .contact {
-  background: var(--ink);
+  background: rgba(16, 46, 87, 0.94);
   color: white;
   display: grid;
   gap: 12vw;
@@ -462,7 +461,7 @@ h2 em {
 }
 .footer {
   align-items: center;
-  background: #0c2444;
+  background: rgba(12, 36, 68, 0.96);
   color: #aec0c2;
   display: grid;
   gap: 20px;
@@ -519,21 +518,17 @@ h2 em {
     border: 0;
     width: max-content !important;
   }
-  .hero {
-    min-height: 650px;
-  }
-  .hero-art {
+  .page-background {
     background-position: 62% center;
   }
   .hero-content {
-    padding: 150px 22px 110px;
+    padding: 36px 22px 24px;
   }
   .hero-content h1 {
     font-size: clamp(38px, 8vw, 54px);
   }
   .hero-footer {
-    left: 22px;
-    right: 22px;
+    padding: 0 22px 28px;
   }
   .hero-footer span:first-child {
     max-width: 170px;

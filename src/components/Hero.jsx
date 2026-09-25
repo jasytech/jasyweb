@@ -11,7 +11,6 @@ function Hero({
 }) {
   return (
     <section id="inicio" className="hero">
-      <div className="hero-art" aria-hidden="true" />
       <div className="hero-content">
         <p className="eyebrow">
           <Sparkles size={15} /> {eyebrow}

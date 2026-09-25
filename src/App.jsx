@@ -42,6 +42,7 @@ const services = [
 function App() {
   return (
     <div className="site-shell">
+      <div className="page-background" aria-hidden="true" />
       <a className="skip-link" href="#contenido">
         Saltar al contenido
       </a>
