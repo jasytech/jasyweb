@@ -35,7 +35,7 @@ test('carga sin errores y todos los recursos usan la ruta de GitHub Pages', asyn
   const background = await page
     .locator('.page-background')
     .evaluate((element) => getComputedStyle(element).backgroundImage)
-  expect(background).toContain('/jasyweb/assets/hero.webp')
+  expect(background).toContain('/jasyweb/assets/hero-sin-logo.webp')
   await expect(
     page.getByRole('link', { name: /JasyTECH en GitHub/ }),
   ).toHaveAttribute('href', 'https://github.com/jasytech')

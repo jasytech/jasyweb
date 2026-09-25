@@ -46,7 +46,7 @@ textarea {
       rgba(235, 245, 245, 0.84),
       rgba(235, 245, 245, 0.42)
     ),
-    url('/assets/hero.webp') center / cover no-repeat;
+    url('/assets/hero-sin-logo.webp') center / cover no-repeat;
 }
 .navbar {
   align-items: center;
