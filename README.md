@@ -46,6 +46,8 @@ La plantilla `docs/github-actions-ci.yml.example` permite ejecutar las verificac
 
 El formulario conserva los campos originales y envía un POST a [FormSubmit](https://formsubmit.co/) desde la página. No requiere abrir una aplicación de correo ni colocar contraseñas en el código.
 
+El endpoint de `src/config.js` usa el identificador público proporcionado por FormSubmit en lugar del email. El correo de la empresa sigue visible como contacto alternativo. Reemplazar el endpoint no sustituye la confirmación mediante «Activate Form» en el correo recibido.
+
 Para habilitar la entrega a la empresa:
 
 1. Publicar el sitio y completar un envío desde el formulario.

@@ -43,7 +43,7 @@ test('carga sin errores y todos los recursos usan la ruta de GitHub Pages', asyn
   expect(failedResources).toEqual([])
 })
 
-const endpoint = 'https://formsubmit.co/ajax/jasytech.arg@gmail.com'
+const endpoint = 'https://formsubmit.co/ajax/9f458978d2f1ff778292628e60f23595'
 
 async function fillContact(page) {
   await page.goto('./#contacto')
